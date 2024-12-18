@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv
+
 
 """
 Django settings for pjt project.
@@ -39,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chatbot',
+    'account',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -49,7 +54,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS middleware 추가
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'pjt.urls'
 
@@ -108,11 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -132,3 +140,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+import environ
+
+
+
+# 환경변수를 불러올 수 있는 상태로 설정
+env = environ.Env(DEBUG=(bool, True))
+
+# 읽어올 환경 변수 파일을 지정
+environ.Env.read_env(
+  env_file = os.path.join(BASE_DIR, '.env')
+)
+
+# 설정한 변수를 읽어옴
+OPENAI_API_KEY = env('OPENAI_API_KEY')
+
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY 환경 변수가 설정되지 않았습니다.")
+
+# 로그인 관련 설정
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'chat'
+
+# settings.py
+LOGOUT_REDIRECT_URL = '/login/'  # 로그아웃 후 리디렉션할 URL

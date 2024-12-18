@@ -18,19 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from account.views import index  # 앱의 views.py에서 my_view 가져오기
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # 메인 앱
-    path('', include('main.urls')),
+    path('', index, name='index'),
 
     # 챗봇 앱
     path('chat/', include('chatbot.urls')),
 
     # 계정 관리 앱
     path('account/', include('account.urls')),
-]
+# ]
 
 # 개발 환경에서 미디어 파일 서빙
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
