@@ -1149,7 +1149,7 @@
 <body>
     <header class="header">
         <div class="header-left">
-            <img src="{% static 'KAC.png' %}" alt="한국공항공사 로고" class="logo">
+            <img src="{{ MEDIA_URL }}KAC.png" alt="한국공항공사 로고" class="logo">
             <div class="company-title">
                 <span class="company-name">한국공항공사</span>
                 <span class="company-subtitle">인사규정 챗봇 서비스</span>
@@ -1177,14 +1177,17 @@
                     </div>
                 </div>
                 <div class="profile-actions">
-                    <a href="{% url 'my_page' %}" class="profile-btn">
+                    <a href="{% url 'account:my_page' %}" class="profile-btn">
                         <i class="fas fa-user-cog"></i>
                         <span>마이페이지</span>
                     </a>
-                    <button class="logout-button" onclick="location.href='{% url 'logout' %}'">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>로그아웃</span>
-                    </button>
+                    <form method="post" action="{% url 'account:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">
+                            <i class="fas fa-sign-out-alt"></i>
+                            로그아웃
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1362,6 +1365,7 @@
                 },
                 body: JSON.stringify({ message: message })
             })
+            
             .then(response => response.json())
             .then(data => {
                 if (data.response) {

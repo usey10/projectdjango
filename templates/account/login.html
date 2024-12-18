@@ -147,11 +147,11 @@
 <body>
     <div class="register-container">
         <div class="logo-area">
-            <img src="{% static 'KAC.png' %}" alt="한국공항공사 로고">
+            <img src="{{ MEDIA_URL }}KAC.png" alt="한국공항공사 로고">
             <h2>로그인</h2>
         </div>
         
-        <form class="register-form" method="POST" action="{% url 'login' %}">
+        <form class="register-form" method="POST" action="{% url 'account:login' %}">
             {% csrf_token %}
             {% if error %}
             <div class="error-message">{{ error }}</div>
@@ -177,7 +177,7 @@
         </form>
         
         <div class="login-link">
-            계정이 없으신가요? <a href="{% url 'register' %}">회원가입</a>
+            계정이 없으신가요? <a href="{% url 'account:register' %}">회원가입</a>
         </div>
     </div>
 

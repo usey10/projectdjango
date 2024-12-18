@@ -61,7 +61,7 @@
     <div class="modal-content">
         <span class="close" onclick="hideModal('imageUploadModal')">&times;</span>
         <h3>프로필 사진 변경</h3>
-        <form method="post" action="{% url 'update_profile_image' %}" enctype="multipart/form-data">
+        <form method="post" action="{% url 'account:update_profile_image' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="file-upload">
                 <label for="profile_image">
@@ -89,7 +89,7 @@
             <button class="cancel-btn" onclick="hideModal('deleteAccountModal')">
                 취소
             </button>
-            <form method="post" action="{% url 'delete_account' %}" style="display: inline;">
+            <form method="post" action="{% url 'account:delete_account' %}" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" class="confirm-delete-btn">
                     탈퇴하기
