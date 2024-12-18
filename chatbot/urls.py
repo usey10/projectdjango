@@ -24,4 +24,3 @@ urlpatterns = [
     # API 엔드포인트
     path('google-news/', views.get_google_news, name='get_google_news'),
 ]
-]
